@@ -21,7 +21,7 @@ class Quiz extends Component {
         });
     }
 
-    wrong() {
+    incorrect() {
         let {answers} = this.state;
         answers.push(false);
 
@@ -129,8 +129,8 @@ class Quiz extends Component {
                         style={styles.button}
                         backgroundColor={'red'}
                         color={'white'}
-                        title='Wrong'
-                        onPress={() => this.wrong()}
+                        title='Incorrect'
+                        onPress={() => this.incorrect()}
                     />
                 </View>
             </View>
