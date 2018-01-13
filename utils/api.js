@@ -20,23 +20,24 @@ export function getDeck(title) {
 
 export function saveDeckTitle(title) {
     let deck = {
-        title
+        title,
+        questions: []
     };
-    return AsyncStorage.getItem(UDACI_DECKS_KEY, JSON.stringify({
+    return AsyncStorage.mergeItem(UDACI_DECKS_KEY, JSON.stringify({
         [title]: deck
     }))
 
 }
 
-export function addCardToDeck(deckId, question) {
+export function addCardToDeck(deckTitle, question) {
     return AsyncStorage.getItem(UDACI_DECKS_KEY)
         .then(results => {
             let data = JSON.parse(results);
 
-            let questions = data[deckId].questions || [];
+            let questions = data[deckTitle].questions || [];
             questions.push(question);
 
-            data[deckId].questions = questions;
+            data[deckTitle].questions = questions;
 
             return AsyncStorage.setItem(UDACI_DECKS_KEY, JSON.stringify(data));
         })

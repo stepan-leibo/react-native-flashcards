@@ -21,11 +21,15 @@
   "dependencies": {
     "@shoutem/ui": "^0.22.0",
     "expo": "^23.0.6",
+    "prop-types": "latest",
     "react": "^16.2.0",
     "react-native": "^0.50.4",
+    "react-native-elements": "^0.18.5",
+    "react-navigation": "^1.0.0-beta.22",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "sort-by": "^1.2.0"
   }
 }
