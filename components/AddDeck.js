@@ -30,7 +30,9 @@ class AddDeck extends Component {
 
             this.setState({
                 title: ''
-            })
+            });
+
+            this.props.navigation.navigate(`Deck`, {deckTitle: this.state.title})
         }
     }
 

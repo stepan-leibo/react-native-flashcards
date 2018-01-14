@@ -1,19 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View, Platform} from 'react-native';
-import Utils from './utils/utils';
 import {applyMiddleware, createStore, compose} from 'redux'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk';
 import reducer from './reducers/reducers'
-import Decks from "./components/Decks";
-import { Header} from "react-native-elements";
-import {TabNavigator, StackNavigator, DrawerNavigator} from 'react-navigation'
-import AddDeck from "./components/AddDeck";
-import Deck from "./components/Deck";
-import AddCard from "./components/AddCard";
-import Quiz from "./components/Quiz";
+import {Drawer} from "./utils/navigation";
+import {setLocalNotification} from "./utils/notifications";
 
-const logger = store => next => action => {
+const loggerMiddleware = store => next => action => {
     console.group(action.type);
     console.info('dispatching', action);
     let result = next(action);
@@ -24,41 +17,14 @@ const logger = store => next => action => {
 
 const store = createStore(
     reducer,
-    applyMiddleware(logger, thunk)
+    applyMiddleware(thunk)
 );
 
-const ModalStack = StackNavigator({
-    Decks: {
-        screen: Decks,
-    },
-    Deck: {
-        path: 'decks/:deckTitle',
-        screen: Deck,
-    },
-    AddCard: {
-        path: 'decks/:deckTitle/cards',
-        screen: AddCard
-    },
-    Quiz: {
-        path: 'quiz/:deckTitle',
-        screen: Quiz
-    }
-}, {
-    navigationOptions: {
-        header: null
-    }
-});
-
-const Drawer = DrawerNavigator({
-    Decks: {
-        screen: ModalStack
-    },
-    'Add new deck': {
-        screen: AddDeck
-    }
-});
-
 export default class App extends React.Component {
+    componentDidMount() {
+        setLocalNotification()
+    }
+
     render() {
         return (
             <Provider store={store}>

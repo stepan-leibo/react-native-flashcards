@@ -3,13 +3,23 @@ import {View, StyleSheet} from "react-native";
 import {HeaderButton} from "./Utils";
 import {connect} from "react-redux";
 import {Header, Text, Button} from "react-native-elements";
-import {getDecks} from "../utils/api";
-import {deckActionCreators} from "../actions/actions";
+import {clearLocalNotification, setLocalNotification} from "../utils/notifications";
 
 class Deck extends Component {
 
+    startQuiz() {
+        clearLocalNotification()
+            .then(setLocalNotification());
+
+        this.props.navigation.navigate(`Quiz`, {deckTitle: this.props.deck.title})
+    }
+
     render() {
         let {deck} = this.props;
+        if (!deck) {
+            return <View/>
+        }
+
         return (
             <View style={{flex: 1}}>
                 <Header
@@ -27,7 +37,7 @@ class Deck extends Component {
                         disabled={!deck.questions.length}
                         color={'black'}
                         title='Start QUIZ'
-                        onPress={() => this.props.navigation.navigate(`Quiz`, {deckTitle: deck.title})}
+                        onPress={() => this.startQuiz()}
                     />
                     <Button
                         style={styles.button}

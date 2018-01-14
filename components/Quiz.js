@@ -87,6 +87,13 @@ class Quiz extends Component {
         }
     }
 
+    tryAgain() {
+        this.setState({
+            answers: [],
+            questionNumber: 0
+        })
+    }
+
     quizView() {
         let {deck} = this.props;
 
@@ -94,14 +101,33 @@ class Quiz extends Component {
             let correctAnswersPercent = Math.round(this.state.answers.filter(item => item).length / this.state.answers.length * 100);
             return (
                 <View style={styles.content}>
-                    <Text h3>{`You have ${correctAnswersPercent}% correct answers!`}</Text>
+                    <View style={styles.contentBlock}>
+                        <Text h3>{`You have ${correctAnswersPercent}% correct answers!`}</Text>
+                    </View>
+                    <View>
+                        <Button
+                            style={styles.button}
+                            backgroundColor={'yellow'}
+                            disabled={!deck.questions.length}
+                            color={'black'}
+                            title='Restart Quiz'
+                            onPress={() => this.tryAgain()}
+                        />
+                        <Button
+                            style={styles.button}
+                            color={'black'}
+                            title='Back to Deck'
+                            onPress={() => this.props.navigation.navigate(`Deck`, {deckTitle: deck.title})}
+                        />
+                    </View>
                 </View>
             );
         }
 
         return (
             <View style={styles.content}>
-                <View style={styles.question}>
+                <Text h4 style={{alignSelf: 'center'}}>{`Question ${this.state.questionNumber + 1}/${deck.questions.length}`}</Text>
+                <View style={styles.contentBlock}>
                     {this.state.showQuestion && (
                         <Animated.View style={{opacity: this.state.opacityQuestion}}>
                             <TouchableWithoutFeedback onPress={e => this.flip()} >
@@ -157,7 +183,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between'
     },
-    question: {
+    contentBlock: {
         flex: 5,
         // alignItems: 'center',
         justifyContent: 'center',
@@ -165,9 +191,9 @@ const styles = StyleSheet.create({
     },
     buttons: {
         flex: 1,
-        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'row'
     },
     button: {
         marginBottom: 10

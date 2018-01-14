@@ -20,8 +20,6 @@ export default handleActions({
     },
     QUESTIONS: {
         ADD_ONE: (state, action) => {
-            console.log(state);
-            console.log(action);
             let deck = state.decks.find(item => item.title === action.payload.deckId);
             let questions = deck.questions || [];
             questions.push(action.payload.question);

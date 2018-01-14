@@ -48,10 +48,8 @@ const styles = StyleSheet.create({
     }
 });
 
-function mapStateToProps(state) {
-    return {
-        decks: state.deck.decks ? state.deck.decks.sort(sortBy('title')) : []
-    }
-}
+const mapStateToProps = ({ deck: { decks } }) => (
+    { decks: decks ? decks.sort(sortBy('title')) : [] }
+);
 
 export default connect(mapStateToProps)(Decks)
