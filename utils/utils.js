@@ -146,5 +146,6 @@ function setDummyData() {
         }
     };
 
-    return AsyncStorage.setItem(UDACI_DECKS_KEY, JSON.stringify(data));
+    AsyncStorage.setItem(UDACI_DECKS_KEY, JSON.stringify(data));
+    return data;
 }
