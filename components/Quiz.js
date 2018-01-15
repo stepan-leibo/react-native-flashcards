@@ -117,7 +117,7 @@ class Quiz extends Component {
                             style={styles.button}
                             color={'black'}
                             title='Back to Deck'
-                            onPress={() => this.props.navigation.navigate(`Deck`, {deckTitle: deck.title})}
+                            onPress={() => this.props.navigation.goBack()}
                         />
                     </View>
                 </View>
